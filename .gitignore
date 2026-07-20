@@ -1,0 +1,8 @@
+# Ignorera lokala Terraform-binärer och plugins
+.terraform/
+.terraform.lock.hcl
+
+# Ignorera känsliga state-filer som innehåller infrastrukturstatus
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
