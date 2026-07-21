@@ -15,8 +15,9 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: web
-        image: nginx:latest
+      - name: frontend
+        image: localhost:5001/frontend-app:latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
 ---
