@@ -1,36 +1,36 @@
-# 🚀 DevOps Portfolio: Local Kubernetes Cluster via IaC
+# 🚀 DevOps Portfolio Project: Infrastructure as Code & Local CI/CD Pipeline
 
-Detta projekt demonstrerar hur man sätter upp en komplett, produktionsliknande DevOps-miljö lokalt på en Windows-maskin med hjälp av infrastruktur som kod (IaC) och container-orkestrering.
-
----
-
-## 🏗️ Arkitekturöversikt
-
-Projektet bygger upp ett lokalt **Kubernetes-kluster (3 noder)** som körs inuti **Docker Desktop** via **WSL2 (Ubuntu)**. Hela infrastrukturen är deklarerad och uppsatt automatiskt med **Terraform**.
-
-*   **Infrastrukturverktyg:** Terraform (med `siderolabs/kind`-providern)
-*   **Klusterlösning:** Kubernetes via KiND (Kubernetes in Docker)
-*   **Lokalt Registry:** En privat container-register (port `5001`) för att lagra lokala Docker-images.
-*   **Klusterstruktur:**
-    *   1 Control Plane (Hjärnan som styr klustret)
-    *   2 Worker-noder (Arbetshästar som kör applikationerna)
+Detta projekt demonstrerar en komplett, lokal DevOps-workflow som sätter upp en Kubernetes-miljö via Infrastructure as Code (IaC) och automatiserar deployment av en webbapplikation med en CI/CD-pipeline.
 
 ---
 
-## 🛠️ Kommandoreferens (Cheat Sheet)
+## 🛠️ Teknologier & Verktyg
 
-Här är de viktigaste kommandona som används för att hantera miljön:
+* **IaC:** Terraform
+* **Orkestrering:** Kubernetes (Kind - Kubernetes in Docker)
+* **Containerisering:** Docker
+* **CI/CD / Automatisering:** PowerShell-skript (`deploy.ps1`)
+* **Webbserver:** Nginx
 
-### Infrastruktur (Terraform)
+---
+
+## 🏗️ Arkitektur & Flöde
+
+1. **Infrastruktur (IaC):** Terraform skapar ett lokalt Kind-kluster (`production-replica`).
+2. **Build:** PowerShell-skriptet bygger en Docker-image från applikationskoden.
+3. **Registry:** Imagen taggas och skickas till det lokala container-registryt.
+4. **Deploy:** Kubernetes-manifest (`deployment.yaml`) verkställs och rullar ut applikationen i klustret utan downtime (`rollout restart`).
+
+---
+
+## 🚀 Hur man kör projektet lokalt
+
+### Förutsättningar
+* Docker Desktop igång
+* Terraform installerat
+* `kubectl` och `kind` installerat
+
+### 1. Starta infrastrukturen (IaC)
 ```powershell
-# Initiera Terraform-projektet och ladda ner providers
 terraform init
-
-# Planera och se vad som kommer att skapas
-terraform plan
-
-# Starta upp hela klustret och registryt automatiskt
-terraform apply
-
-# Riv ner och nollställ hela miljön
-terraform destroy
+terraform apply -auto-approve
